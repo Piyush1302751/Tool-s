@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Convert images to different formats instantly. Supports PNG, JPG, WEBP, and more. Fast and SEO-optimized.">
+    <meta name="keywords" content="image converter, convert images, PNG to JPG, JPG to WEBP, online image conversion">
+    <meta name="author" content="Your Name">
+    <title>Image Converter Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #000428, #004e92);
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            color: white;
+            overflow-x: hidden;
+            animation: gradientAnimation 10s infinite alternate;
+        }
+        
+        @keyframes gradientAnimation {
+            0% { background: linear-gradient(to right, #000428, #004e92); }
+            50% { background: linear-gradient(to right, #ff7e5f, #feb47b); }
+            100% { background: linear-gradient(to right, #1a2980, #26d0ce); }
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            font-size: 32px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+        .box {
+            width: 90%;
+            max-width: 500px;
+            padding: 25px;
+            margin: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease-in-out;
+        }
+        .box:hover {
+            transform: scale(1.05);
+        }
+        input, select, button, a {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+        }
+        button, a {
+            background: linear-gradient(45deg, #ffcc00, #ff0066);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
+        }
+        button:hover, a:hover {
+            background: linear-gradient(45deg, #ff0066, #ffcc00);
+            transform: scale(1.08);
+        }
+        .adsense-section {
+            margin: 20px auto;
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Image Converter Pro
+    </header>
+    
+    <main class="container">
+        <section class="box">
+            <h2>Upload & Convert</h2>
+            <input type="file" id="imageInput" accept="image/*">
+            <select id="formatSelect">
+                <option value="png">PNG</option>
+                <option value="jpg">JPG</option>
+                <option value="webp">WEBP</option>
+            </select>
+            <button onclick="convertImage()">Convert Now</button>
+            <a id="downloadLink" href="#" download style="display: none;">Download Image</a>
+        </section>
+        
+        <section class="adsense-section">
+            <!-- Google AdSense Ad Slot -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="YOUR-ADSENSE-CLIENT-ID"
+                data-ad-slot="YOUR-AD-SLOT-ID"
+                data-ad-format="auto"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </section>
+    </main>
+    
+    <script>
+        function convertImage() {
+            let fileInput = document.getElementById('imageInput').files[0];
+            let format = document.getElementById('formatSelect').value;
+
+            if (!fileInput) {
+                alert('Please select an image to convert.');
+                return;
+            }
+
+            let reader = new FileReader();
+            reader.readAsDataURL(fileInput);
+            reader.onload = function (event) {
+                let img = new Image();
+                img.src = event.target.result;
+                img.onload = function () {
+                    let canvas = document.createElement('canvas');
+                    let ctx = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+
+                    let convertedImage = canvas.toDataURL(`image/${format}`);
+                    let downloadLink = document.getElementById('downloadLink');
+                    downloadLink.href = convertedImage;
+                    downloadLink.download = `converted-image.${format}`;
+                    downloadLink.style.display = 'block';
+
+                    alert('Image Converted Successfully! Click download to save the image.');
+                };
+            };
+        }
+    </script>
+</body>
+</html>
